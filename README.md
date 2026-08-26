@@ -84,8 +84,9 @@ A Node.js & Express.js REST API with MongoDB (Mongoose) that implements role-bas
 
 ## Environment Variables
 
-Required variables inside `.env`:
+Create a `.env` file in the root folder with the following keys:
 
-DB_URL=mongodb://localhost:27017/job-portal-db
+```env
 PORT=4000
-SECRET_KEY='mnop'
+DB_URL=mongodb://localhost:27017/job-portal-db
+SECRET_KEY=your_jwt_secret_key_here
