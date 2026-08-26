@@ -1,0 +1,676 @@
+{
+  "info": {
+    "_postman_id": "8936fb6a-560c-4364-b408-c7b769955ad5",
+    "name": "job-portal-db",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54798415",
+    "_collection_link": "https://go.postman.co/collection/54798415-8936fb6a-560c-4364-b408-c7b769955ad5?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "admin login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n    {\r\n  \r\n  \"name\": \"admin\",\r\n  \"email\": \"admin@mail.com\",\r\n  \"password\": \"admin\",\r\n  \"role\": \"ADMIN\"\r\n  \r\n}\r\n    \r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:4000/admin-api/admin/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "admin-api",
+            "admin",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "employer registration",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n    {\r\n  \r\n  \"name\": \"Rahul Sharma\",\r\n  \"email\": \"hu.sharma@techcorp.com\",\r\n  \"password\": \"ra\",\r\n  \"role\": \"EMPLOYER\",\r\n  \"skills\": [\r\n    \"Recruitment\",\r\n    \"Talent Acquisition\",\r\n    \"Team Management\",\r\n    \"JavaScript\",\r\n    \"Node.js\"\r\n  ],\r\n  \"experience\": [\r\n    {\r\n      \"company\": \"TechCorp Solutions\",\r\n      \"title\": \"Senior HR Manager\",\r\n      \"startDate\": \"2021-06-01\",\r\n      \"endDate\": null,\r\n      \"description\": \"Managing recruitment, employee onboarding, and technical hiring for software development teams.\"\r\n    },\r\n    {\r\n      \"company\": \"Innovate Technologies\",\r\n      \"title\": \"HR Executive\",\r\n      \"startDate\": \"2018-07-01\",\r\n      \"endDate\": \"2021-05-31\",\r\n      \"description\": \"Handled recruitment, candidate screening, interviews, and employee engagement activities.\"\r\n    }\r\n  ],\r\n  \"education\": [\r\n    {\r\n      \"institution\": \"VNR Vignana Jyothi Institute of Engineering and Technology\",\r\n      \"degree\": \"Bachelor of Business Administration\",\r\n      \"fieldOfStudy\": \"Human Resources\",\r\n      \"startDate\": \"2015-07-01\",\r\n      \"endDate\": \"2018-05-31\"\r\n    }\r\n  ]\r\n}\r\n  \r\n  \r\n\r\n    \r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:4000/employer-api/users",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "employer-api",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "job seeker registration",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Ananya Mehta\",\r\n        \"email\": \"ananya.mehta@gmail.com\",\r\n        \"password\": \"ananya\",\r\n        \"role\": \"JOB SEEKER\",\r\n        \"skills\": [\r\n            \"Java\",\r\n            \"Spring Boot\",\r\n            \"SQL\",\r\n            \"Git\",\r\n            \"REST APIs\"\r\n        ],\r\n        \"experience\": [\r\n            {\r\n                \"company\": \"Infosys\",\r\n                \"title\": \"Software Engineering Intern\",\r\n                \"startDate\": \"2025-05-01T00:00:00.000Z\",\r\n                \"endDate\": \"2025-07-31T00:00:00.000Z\",\r\n                \"description\": \"Developed REST APIs using Java and Spring Boot and worked with SQL databases.\",\r\n                \"_id\": \"6a8d3c79ec87047cfe0b5dac\"\r\n            }\r\n        ],\r\n        \"education\": [\r\n            {\r\n                \"institution\": \"Osmania University\",\r\n                \"degree\": \"Bachelor of Technology\",\r\n                \"fieldOfStudy\": \"Computer Science and Engineering\",\r\n                \"startDate\": \"2023-07-01T00:00:00.000Z\",\r\n                \"endDate\": \"2027-05-31T00:00:00.000Z\",\r\n                \"_id\": \"6a8d3c79ec87047cfe0b5dad\"\r\n            }\r\n        ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:4000/jobSeeker-api/users",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "jobSeeker-api",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "employer login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\"name\":\r\n\"Rahul Sharma\",\r\n\"email\":\r\n\"rahul.sharma@techcorp.com\",\r\n\"password\":\"rahul\",\r\n\r\n\"role\":\r\n\"EMPLOYER\"}\r\n  \r\n  \r\n\r\n    \r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:4000/employer-api/users/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "employer-api",
+            "users",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "jobseeker login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n    {\r\n  \r\n  \"name\": \"Rahul Sharma\",\r\n  \"email\": \"rahul.sharma@techcorp.com\",\r\n  \"password\": \"rahul\",\r\n  \"role\": \"EMPLOYER\"\r\n  \r\n}\r\n  \r\n  \r\n\r\n    \r\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/jobSeeker-api/users/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "jobSeeker-api",
+            "users",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "admin get all users",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n    {\r\n  \r\n  \"name\": \"admin\",\r\n  \"email\": \"admin@mail.com\",\r\n  \"password\": \"admin\",\r\n  \"role\": \"ADMIN\"\r\n  \r\n}\r\n    \r\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/admin-api/users",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "admin-api",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "admin get user by id",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n    {\r\n  \r\n  \"name\": \"admin\",\r\n  \"email\": \"admin@mail.com\",\r\n  \"password\": \"admin\",\r\n  \"role\": \"ADMIN\"\r\n  \r\n}\r\n    \r\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/admin-api/users/6a8d3c79ec87047cfe0b5dab",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "admin-api",
+            "users",
+            "6a8d3c79ec87047cfe0b5dab"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "admin delete by id",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n    {\r\n  \r\n  \"name\": \"admin\",\r\n  \"email\": \"admin@mail.com\",\r\n  \"password\": \"admin\",\r\n  \"role\": \"ADMIN\"\r\n  \r\n}\r\n    \r\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/admin-api/users/6a8d3c79ec87047cfe0b5dab",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "admin-api",
+            "users",
+            "6a8d3c79ec87047cfe0b5dab"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "employer create job posting",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \r\n  \"title\": \"Backend Developer\",\r\n  \"company\": \"Tech Mahindra\",\r\n  \"description\": \"Develop and maintain backend applications using Node.js, Express.js, and MongoDB.\",\r\n  \"location\": \"Hyderabad\",\r\n  \"employmentType\": \"Full-time\",\r\n  \"salaryRange\": {\r\n    \"min\": 600000,\r\n    \"max\": 1000000,\r\n    \"currency\": \"INR\"\r\n  },\r\n  \"requiredSkills\": [\r\n    \"JavaScript\",\r\n    \"Node.js\",\r\n    \"Express.js\",\r\n    \"MongoDB\"\r\n  ],\r\n  \"experienceRequirement\": \"1-3 years\",\r\n  \"applicationDeadline\": \"2026-10-30\",\r\n  \"jobStatus\": \"inactive\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:4000/employer-api/jobs",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "employer-api",
+            "jobs"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "employer view his job postings",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\": \"Frontend Developer\",\r\n  \"company\": \"Wipro\",\r\n  \"description\": \"Build responsive and interactive web applications using React.js, HTML, and CSS.\",\r\n  \"location\": \"Hyderabad\",\r\n  \"employmentType\": \"Full-time\",\r\n  \"salaryRange\": {\r\n    \"min\": 500000,\r\n    \"max\": 900000,\r\n    \"currency\": \"INR\"\r\n  },\r\n  \"requiredSkills\": [\r\n    \"HTML\",\r\n    \"CSS\",\r\n    \"JavaScript\",\r\n    \"React.js\"\r\n  ],\r\n  \"experienceRequirement\": \"0-2 years\",\r\n  \"applicationDeadline\": \"2026-10-15\",\r\n  \"jobStatus\": \"active\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/employer-api/jobs",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "employer-api",
+            "jobs"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "employer view a specific job by id",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\": \"Frontend Developer\",\r\n  \"company\": \"Wipro\",\r\n  \"description\": \"Build responsive and interactive web applications using React.js, HTML, and CSS.\",\r\n  \"location\": \"Hyderabad\",\r\n  \"employmentType\": \"Full-time\",\r\n  \"salaryRange\": {\r\n    \"min\": 500000,\r\n    \"max\": 900000,\r\n    \"currency\": \"INR\"\r\n  },\r\n  \"requiredSkills\": [\r\n    \"HTML\",\r\n    \"CSS\",\r\n    \"JavaScript\",\r\n    \"React.js\"\r\n  ],\r\n  \"experienceRequirement\": \"0-2 years\",\r\n  \"applicationDeadline\": \"2026-10-15\",\r\n  \"jobStatus\": \"active\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/employer-api/jobs/6a8d4a4e432e316c34a22560",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "employer-api",
+            "jobs",
+            "6a8d4a4e432e316c34a22560"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "employer updating his own job posting",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"employerId\":\r\n\"6a8d3534f087b3ef45237ce3\",\r\n\"title\":\r\n\"Java Backend Developer\",\r\n\"company\":\r\n\"Infosys\",\r\n\"description\":\r\n\"Develop and maintain backend applications using Java and Spring Boot.\",\r\n\"location\":\r\n\"Hyderabad\",\r\n\"employmentType\":\r\n\"Full-time\",\r\n\r\n\"salaryRange\":\r\n{\"min\":\r\n600000,\r\n\"max\":\r\n1000000,\r\n\"currency\":\r\n\"INR\"},\r\n\r\n\r\n\"experienceRequirement\":\r\n\"0-2 years\",\r\n\"applicationDeadline\":\"2026-09-30\",\r\n\"jobStatus\":\r\n\"inactive\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:4000/employer-api/jobs/6a8d6d4149ff8e6e0097b0f1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "employer-api",
+            "jobs",
+            "6a8d6d4149ff8e6e0097b0f1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "employer delete his own job posting",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"employerId\":\r\n\"6a8d3534f087b3ef45237ce3\",\r\n\"title\":\r\n\"Java Backend Develope\",\r\n\"company\":\r\n\"Infosys\",\r\n\"description\":\r\n\"Develop and maintain backend applications using Java and Spring Boot.\",\r\n\"location\":\r\n\"Hyderabad\",\r\n\"employmentType\":\r\n\"Full-time\",\r\n\r\n\"salaryRange\":\r\n{\"min\":\r\n600000,\r\n\"max\":\r\n1000000,\r\n\"currency\":\r\n\"INR\"},\r\n\r\n\r\n\"experienceRequirement\":\r\n\"0-2 years\",\r\n\"applicationDeadline\":\"2026-09-30\",\r\n\"jobStatus\":\r\n\"active\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:4000/employer-api/jobs/6a8d5d764a037be6542d784e",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "employer-api",
+            "jobs",
+            "6a8d5d764a037be6542d784e"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "admin view all jobs",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n    {\r\n  \r\n  \"name\": \"admin\",\r\n  \"email\": \"admin@mail.com\",\r\n  \"password\": \"admin\",\r\n  \"role\": \"ADMIN\"\r\n  \r\n}\r\n    \r\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/admin-api/jobs",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "admin-api",
+            "jobs"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "admin view job by id",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n    {\r\n  \r\n  \"name\": \"admin\",\r\n  \"email\": \"admin@mail.com\",\r\n  \"password\": \"admin\",\r\n  \"role\": \"ADMIN\"\r\n  \r\n}\r\n    \r\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/admin-api/jobs/6a8d684acf5e611eb4f9a69a",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "admin-api",
+            "jobs",
+            "6a8d684acf5e611eb4f9a69a"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete inactive job by admin",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n    {\r\n  \r\n  \"name\": \"admin\",\r\n  \"email\": \"admin@mail.com\",\r\n  \"password\": \"admin\",\r\n  \"role\": \"ADMIN\"\r\n  \r\n}\r\n    \r\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/admin-api/jobs/6a8d6fb91da8557d965e60d9",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "admin-api",
+            "jobs",
+            "6a8d6fb91da8557d965e60d9"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "jobseeker view own profile",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\"name\":\r\n\"Rahul Sharma\",\r\n\"email\":\r\n\"rahul.sharma@techcorp.com\",\r\n\"password\":\"rahul\",\r\n\r\n\"role\":\r\n\"EMPLOYER\"}\r\n  \r\n  \r\n\r\n    \r\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/jobSeeker-api/users",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "jobSeeker-api",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "jobseeker update own profile",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n  \r\n    {\r\n  \r\n  \"name\":\r\n\"Ananya Reddy\",\r\n\"email\":\r\n\"ananya.rddy@gmail.com\",\r\n\"password\":\r\n\"ananya\",\r\n\"role\":\r\n\"JOB SEEKER\"\r\n  \r\n}\r\n  \r\n\r\n    \r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:4000/jobSeeker-api/users",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "jobSeeker-api",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "jobseeker view job by id",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n  \r\n    {\r\n  \r\n  \"name\":\r\n\"Ananya Reddy\",\r\n\"email\":\r\n\"ananya.rddy@gmail.com\",\r\n\"password\":\r\n\"ananya\",\r\n\"role\":\r\n\"JOB SEEKER\"\r\n  \r\n}\r\n  \r\n\r\n    \r\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/jobSeeker-api/jobs/6a8d5d764a037be6542d784e",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "jobSeeker-api",
+            "jobs",
+            "6a8d5d764a037be6542d784e"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "jobSeeker logout",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "\r\n  \r\n    {\r\n  \r\n  \"name\":\r\n\"Ananya Reddy\",\r\n\"email\":\r\n\"ananya.rddy@gmail.com\",\r\n\"password\":\r\n\"ananya\",\r\n\"role\":\r\n\"JOB SEEKER\"\r\n  \r\n}\r\n  \r\n\r\n    \r\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/jobSeeker-api/logout",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "jobSeeker-api",
+            "logout"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "jobseeker create application",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"applicationStatus\":\"Accepted\"}\r\n  \r\n\r\n    \r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:4000/jobSeeker-api/jobs/6a8d5d764a037be6542d784e/apply",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "jobSeeker-api",
+            "jobs",
+            "6a8d5d764a037be6542d784e",
+            "apply"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "jobseeker view own applications",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{}\r\n  \r\n\r\n    \r\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/jobSeeker-api/applications",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "jobSeeker-api",
+            "applications"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "employer getting his job applications",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{}\r\n  \r\n\r\n    \r\n"
+        },
+        "url": {
+          "raw": "http://localhost:4000/employer-api/applications",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "employer-api",
+            "applications"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "employer updating his job applictions",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"applicationStatus\": \"Accepted\"}\r\n  \r\n\r\n    \r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:4000/employer-api/applications/6a8d80c9fc70ef0c4f38532d",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "4000",
+          "path": [
+            "employer-api",
+            "applications",
+            "6a8d80c9fc70ef0c4f38532d"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
