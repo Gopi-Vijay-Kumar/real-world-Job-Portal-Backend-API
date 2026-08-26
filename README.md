@@ -90,3 +90,11 @@ Create a `.env` file in the root folder with the following keys:
 PORT=4000
 DB_URL=mongodb://localhost:27017/job-portal-db
 SECRET_KEY=your_jwt_secret_key_here
+```
+## API Documentation & Testing
+
+A Postman collection is included in this repository to test all endpoints easily.
+
+1. Import [job-portal-db.postman_collection.json](./job-portal-db.postman_collection.json) into Postman.
+2. Set your environment base URL to `http://localhost:4000`.
+3. Test the Job Seeker, Employer, and Admin routes.
