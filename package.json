@@ -1,12 +1,21 @@
 {
   "name": "job-portal",
   "version": "1.0.0",
-  "description": "",
+  "description": "Job Portal Backend REST API with Express.js, MongoDB, JWT & Cookies",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "express",
+    "mongodb",
+    "mongoose",
+    "jwt",
+    "auth",
+    "job-portal"
+  ],
   "author": "",
   "license": "ISC",
   "type": "module",

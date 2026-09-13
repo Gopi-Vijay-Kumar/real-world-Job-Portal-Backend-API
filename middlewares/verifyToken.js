@@ -1,22 +1,19 @@
 import jwt from 'jsonwebtoken'
 
-export function verifyToken(req,res,next){
-    let accessToken=req.cookies.accessToken
+export function verifyToken(req, res, next) {
+    let accessToken = req.cookies?.accessToken
 
-    if(accessToken==undefined)
-    {
+    if (!accessToken) {
         return res.status(401).json({
-            success:false,
-            message:"you must login first"
+            success: false,
+            message: "Authentication required. Please login first."
         })
     }
-    try{
-        let decodedToken=jwt.verify(accessToken,process.env.SECRET_KEY)
-
-        req.user=decodedToken
+    try {
+        let decodedToken = jwt.verify(accessToken, process.env.SECRET_KEY)
+        req.user = decodedToken
         next()
-    }catch(err)
-    {
-        return res.status(401).json({success:false,message:"invalid or expired token"})
+    } catch (err) {
+        return res.status(401).json({ success: false, message: "Invalid or expired token" })
     }
 }

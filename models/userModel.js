@@ -1,55 +1,62 @@
-import { Schema,model } from "mongoose"
-import {Types} from "mongoose"
+import { Schema, model } from "mongoose"
 
-const userSchema=new Schema(
+const userSchema = new Schema(
     {
-        name:{
-            type:String,
-            required:true,
-            trim:true
+        name: {
+            type: String,
+            required: [true, "Name is required"],
+            trim: true
         },
-        email:{
-            type:String,
-            lowercase:true,
-            trim:true,
-            unique:true,
-            required:true
+        email: {
+            type: String,
+            lowercase: true,
+            trim: true,
+            unique: true,
+            required: [true, "Email is required"]
         },
-        password:{
-            type:String,
-            required:true,
-            minlength:[4,"password should be of atleast 4 characters"],
-            trim:true
+        password: {
+            type: String,
+            required: [true, "Password is required"],
+            minlength: [4, "Password should be at least 4 characters"],
+            select: false
         },
-        role:{
-            type:String,
-            enum:{
-                values:["JOB SEEKER","ADMIN","EMPLOYER"],
-                message:"invalid role"
+        role: {
+            type: String,
+            required: [true, "Role is required"],
+            enum: {
+                values: ["JOB SEEKER", "ADMIN", "EMPLOYER"],
+                message: "Invalid role"
             }
         },
-        skills:[String],
-        experience:[{
-            company:String,
-            title:String,
-            startDate:Date,
-            endDate:Date,
-            description:String
+        status: {
+            type: String,
+            enum: {
+                values: ["active", "suspended", "inactive"],
+                message: "Invalid status"
+            },
+            default: "active"
+        },
+        skills: [String],
+        experience: [{
+            company: String,
+            title: String,
+            startDate: Date,
+            endDate: Date,
+            description: String
         }],
-        education:[{
-            institution:String,
-            degree:String,
-            fieldOfStudy:String,
-            startDate:Date,
-            endDate:Date
+        education: [{
+            institution: String,
+            degree: String,
+            fieldOfStudy: String,
+            startDate: Date,
+            endDate: Date
         }]
-
-        
-    },{
-        timestamps:true,
-        versionkey:false,
-        strict:"throw"
+    },
+    {
+        timestamps: true,
+        versionKey: false,
+        strict: "throw"
     }
 )
 
-export const userModel=model("user",userSchema)
+export const userModel = model("user", userSchema)

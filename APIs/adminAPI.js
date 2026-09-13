@@ -1,137 +1,208 @@
 import exp from 'express'
-import {userModel} from '../models/userModel.js'
+import { userModel } from '../models/userModel.js'
 import { jobModel } from '../models/jobModel.js'
-import {compare} from 'bcryptjs'
+import { applicationModel } from '../models/applicationModel.js'
+import { hash, compare } from 'bcryptjs'
 import { verifyToken } from '../middlewares/verifyToken.js'
-import {allowedRoles} from '../middlewares/allowedRoles.js'
+import { allowedRoles } from '../middlewares/allowedRoles.js'
 import jwt from "jsonwebtoken"
-export const adminRouter=exp.Router()
 
-// API ROUTES
-// admin login
-adminRouter.post("/admin/login",async(req,res)=>{
-    // get admin credentials
-    let credObj=req.body
-    // verify email and admin role
-    let admin=await userModel.findOne({
-        email:credObj.email,
-        role:"ADMIN"
-    })
-    if(admin==null)
-    {
-        return res.status(401).json({
-            success:false,
-            message:"invalid admin email or role"
+export const adminRouter = exp.Router()
+
+// 1. Register Admin account (Initial Admin Setup)
+adminRouter.post("/users", async (req, res, next) => {
+    try {
+        let newAdmin = req.body
+        newAdmin.role = "ADMIN"
+
+        let hashedPassword = await hash(newAdmin.password, 12)
+        newAdmin.password = hashedPassword
+
+        let adminDocument = await userModel.create(newAdmin)
+        let adminObj = adminDocument.toObject()
+        delete adminObj.password
+
+        res.status(201).json({
+            success: true,
+            message: "Admin registered successfully",
+            data: adminObj
         })
+    } catch (err) {
+        next(err)
     }
-    // verify password
-    let result=await compare(credObj.password,admin.password)
+})
 
-    if(result==false)
-    {
-        return res.status(401).json({
-            success:false,
-            message:"invalid password"
+// 2. Admin Login
+adminRouter.post("/admin/login", async (req, res, next) => {
+    try {
+        let credObj = req.body
+
+        let admin = await userModel.findOne({ email: credObj.email, role: "ADMIN" }).select("+password")
+        if (!admin) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid admin email or role"
+            })
+        }
+
+        let isMatched = await compare(credObj.password, admin.password)
+        if (!isMatched) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid password"
+            })
+        }
+
+        let signedToken = jwt.sign(
+            { id: admin._id, role: admin.role, email: admin.email, name: admin.name },
+            process.env.SECRET_KEY,
+            { expiresIn: '1d' }
+        )
+
+        res.cookie("accessToken", signedToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: "lax",
+            maxAge: 24 * 60 * 60 * 1000
         })
-    }
-    // create JWT token
-    let signedToken=jwt.sign({
-        id:admin._id,
-        role:admin.role
-    },process.env.SECRET_KEY,{expiresIn:'1d'})
 
-    // store in cookie
-    res.cookie("accessToken",signedToken,{
-        httpOnly:true,
-        secure:false,
-        sameSite:"lax"
+        let adminObj = admin.toObject()
+        delete adminObj.password
+
+        res.status(200).json({
+            success: true,
+            message: "Admin login successful",
+            data: adminObj
+        })
+    } catch (err) {
+        next(err)
+    }
+})
+
+// 3. View all registered users [protected]
+adminRouter.get("/users", verifyToken, allowedRoles("ADMIN"), async (req, res, next) => {
+    try {
+        let users = await userModel.find()
+        res.status(200).json({ success: true, message: "List of users fetched successfully", data: users })
+    } catch (err) {
+        next(err)
+    }
+})
+
+// 4. View user by ID [protected]
+adminRouter.get("/users/:userId", verifyToken, allowedRoles("ADMIN"), async (req, res, next) => {
+    try {
+        let user = await userModel.findById(req.params.userId)
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" })
+        }
+        res.status(200).json({ success: true, message: "User details fetched", data: user })
+    } catch (err) {
+        next(err)
+    }
+})
+
+// 5. Update user details or status [protected]
+adminRouter.put("/users/:userId", verifyToken, allowedRoles("ADMIN"), async (req, res, next) => {
+    try {
+        let updateData = req.body
+        delete updateData.password
+
+        let updatedUser = await userModel.findByIdAndUpdate(
+            req.params.userId,
+            updateData,
+            { new: true, runValidators: true }
+        )
+        if (!updatedUser) {
+            return res.status(404).json({ success: false, message: "User not found" })
+        }
+        res.status(200).json({ success: true, message: "User updated successfully", data: updatedUser })
+    } catch (err) {
+        next(err)
+    }
+})
+
+// 6. Delete user by ID [protected]
+adminRouter.delete("/users/:userId", verifyToken, allowedRoles("ADMIN"), async (req, res, next) => {
+    try {
+        let deletedUser = await userModel.findByIdAndDelete(req.params.userId)
+        if (!deletedUser) {
+            return res.status(404).json({ success: false, message: "User not found" })
+        }
+        res.status(200).json({ success: true, message: "User deleted successfully", data: deletedUser })
+    } catch (err) {
+        next(err)
+    }
+})
+
+// 7. View all job postings [protected]
+adminRouter.get("/jobs", verifyToken, allowedRoles("ADMIN"), async (req, res, next) => {
+    try {
+        let jobs = await jobModel.find().populate("employerId", "name email company")
+        res.status(200).json({ success: true, message: "All job postings fetched", data: jobs })
+    } catch (err) {
+        next(err)
+    }
+})
+
+// 8. View job posting by ID [protected]
+adminRouter.get("/jobs/:jobId", verifyToken, allowedRoles("ADMIN"), async (req, res, next) => {
+    try {
+        let jobPosting = await jobModel.findById(req.params.jobId).populate("employerId", "name email company")
+        if (!jobPosting) {
+            return res.status(404).json({ success: false, message: "Job posting not found" })
+        }
+        res.status(200).json({ success: true, message: "Job posting details", data: jobPosting })
+    } catch (err) {
+        next(err)
+    }
+})
+
+// 9. Remove inappropriate or invalid job posting [protected]
+adminRouter.delete("/jobs/:jobId", verifyToken, allowedRoles("ADMIN"), async (req, res, next) => {
+    try {
+        let deletedJob = await jobModel.findByIdAndDelete(req.params.jobId)
+        if (!deletedJob) {
+            return res.status(404).json({ success: false, message: "Job posting not found" })
+        }
+        res.status(200).json({ success: true, message: "Job posting removed successfully", data: deletedJob })
+    } catch (err) {
+        next(err)
+    }
+})
+
+// 10. Platform summary / statistics review [protected]
+adminRouter.get("/stats", verifyToken, allowedRoles("ADMIN"), async (req, res, next) => {
+    try {
+        let totalUsers = await userModel.countDocuments()
+        let jobSeekers = await userModel.countDocuments({ role: "JOB SEEKER" })
+        let employers = await userModel.countDocuments({ role: "EMPLOYER" })
+        let admins = await userModel.countDocuments({ role: "ADMIN" })
+        let totalJobs = await jobModel.countDocuments()
+        let activeJobs = await jobModel.countDocuments({ jobStatus: "active" })
+        let totalApplications = await applicationModel.countDocuments()
+
+        res.status(200).json({
+            success: true,
+            message: "Platform metrics summary",
+            data: {
+                users: { totalUsers, jobSeekers, employers, admins },
+                jobs: { totalJobs, activeJobs },
+                applications: { totalApplications }
+            }
+        })
+    } catch (err) {
+        next(err)
+    }
+})
+
+// 11. Admin Logout
+adminRouter.post("/logout", async (req, res) => {
+    res.clearCookie("accessToken", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: "lax"
     })
-
-    // login success response
-    res.status(200).json({success:true,
-        message:"admin login success"
-    })
-})
-
-// view all registered users
-adminRouter.get("/users",verifyToken,allowedRoles("ADMIN"),async(req,res)=>{
-    // get all users through find() from users collection
-    let users=await userModel.find()
-    res.status(200).json({success:true,message:"list of users",data:users})
-})
-
-// view user by id[protected]
-adminRouter.get("/users/:userId",verifyToken,allowedRoles("ADMIN"),async(req,res)=>{
-    // extract id from url
-    let urlId=req.params.userId
-    // get user with id urlId
-    let user=await userModel.findById(urlId)
-    if(user==null)
-    {
-        return res.status(404).json({success:false,message:"user not found"})
-    }
-    res.status(200).json({success:true,message:"user found",data:user})
-})
-
-// Update user details/status [protected]
-adminRouter.put("/users/:userId", verifyToken, allowedRoles("ADMIN"), async (req, res) => {
-    // get new changes to be updated from body and user by id and update
-    let updatedUser = await userModel.findByIdAndUpdate(
-        req.params.userId,
-        req.body,
-        { new: true, runValidators: true }
-    );
-    if (!updatedUser) {
-        return res.status(404).json({ success: false, message: "User not found" });
-    }
-    res.status(200).json({ success: true, message: "User updated successfully", data: updatedUser });
-});
-
-// delete user by id
-adminRouter.delete("/users/:userId",verifyToken,allowedRoles("ADMIN"),async(req,res)=>{
-    // extract user by id
-    let urlId=req.params.userId
-    let deletedUser=await userModel.findByIdAndDelete(urlId)
-    if(deletedUser==null)
-    {
-        return res.status(401).json({success:false,message:"user not found"})
-    }
-    res.status(200).json({success:true,message:"user deleted successfully",data:deletedUser})
-})
-
-// view all job postings
-adminRouter.get("/jobs",async(req,res)=>{
-    // get job from jobs collection through find()
-    let jobs=await jobModel.find()
-    if(jobs.length==0)
-    {
-        return res.status(401).json({success:false,message:"no jobs"})
-    }
-    res.status(200).json({success:true,message:"jobs:",data:jobs})
-})
-
-// view job posting by id
-adminRouter.get("/jobs/:jobId",async(req,res)=>{
-    // get id of job from url
-    let jobId=req.params.jobId
-    let jobPosting=await jobModel.findById(jobId)
-    // if no job matches the id
-    if(jobPosting==null)
-    {
-        return res.status(401).json({success:false,message:"invalid id "})
-    }
-    res.status(200).json({success:true,message:"Job posting:",data:jobPosting})
-})
-
-// remove unwanted/invalid job posting[protected]
-adminRouter.delete("/jobs/:jobId",verifyToken,allowedRoles("ADMIN"),async(req,res)=>{
-    // for invalid thing ,we are not just selecting random jobs but chose those jobs which are "inactive" with a condition
-    let deletedJob=await jobModel.findOneAndDelete({_id: req.params.jobId,
-    jobStatus: "inactive"})
-    if(deletedJob==null)
-    {
-        return res.status(401).json({success:false,message:"this job is not inactive"})
-    }
-    return res.status(200).json({success:true,message:"deleted this inactive job",data:deletedJob})
+    res.status(200).json({ success: true, message: "Admin logout successful" })
 })
 

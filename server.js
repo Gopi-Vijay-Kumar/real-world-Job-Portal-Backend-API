@@ -39,8 +39,41 @@ async function connectDB(){
 }
 // calling for DB connection
 connectDB()
-// error handling middleware(global)
-app.use((err,req,res,next)=>{
-    console.log("error occured")
-    res.json({success:false,message:err.message})
+// Global error handling middleware
+app.use((err, req, res, next) => {
+    console.error("Error encountered:", err.name, err.message)
+
+    // Handle Mongoose Validation Error
+    if (err.name === 'ValidationError') {
+        const messages = Object.values(err.errors).map(e => e.message)
+        return res.status(400).json({
+            success: false,
+            message: "Validation Error",
+            errors: messages
+        })
+    }
+
+    // Handle Mongoose CastError (Invalid ObjectId)
+    if (err.name === 'CastError') {
+        return res.status(400).json({
+            success: false,
+            message: `Invalid format for field: ${err.path}`
+        })
+    }
+
+    // Handle MongoDB Duplicate Key Error (code 11000)
+    if (err.code === 11000) {
+        const field = Object.keys(err.keyValue || {})[0] || 'field'
+        return res.status(409).json({
+            success: false,
+            message: `Duplicate value entered for ${field}. It must be unique.`
+        })
+    }
+
+    // Default Error Response
+    const statusCode = err.statusCode || 500
+    res.status(statusCode).json({
+        success: false,
+        message: err.message || "Internal Server Error"
+    })
 })
