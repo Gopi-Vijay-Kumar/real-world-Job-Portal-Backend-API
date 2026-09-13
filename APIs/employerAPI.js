@@ -49,7 +49,7 @@ employerRouter.post("/users/login", async (req, res, next) => {
 
         let signedToken = jwt.sign(
             { id: user._id, role: user.role, email: user.email, name: user.name },
-            process.env.SECRET_KEY,
+            process.env.SECRET_KEY || 'default_secret_key',
             { expiresIn: '1d' }
         )
 

@@ -21,20 +21,21 @@ app.use("/admin-api",adminRouter)
 app.use("/jobSeeker-api",jobSeekerRouter)
 app.use("/employer-api",employerRouter)
 
-// extract port number from .env
-const port=process.env.PORT
+// extract port number and DB URL from .env with fallback defaults
+const port = process.env.PORT || 4000
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/job-portal-db'
 
 // database connection 
 async function connectDB(){
     try{
-        await connect(process.env.DB_URL)
+        await connect(dbUrl)
         console.log("DB connected")
         // server startup
         app.listen(port,()=>console.log(`server listening on ${port}`))
     }
     catch(err)
     {
-        console.log("err in db connection",err)
+        console.log("err in db connection", err.message)
     }
 }
 // calling for DB connection

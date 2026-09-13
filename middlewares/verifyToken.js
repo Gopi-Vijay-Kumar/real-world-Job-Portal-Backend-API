@@ -10,7 +10,8 @@ export function verifyToken(req, res, next) {
         })
     }
     try {
-        let decodedToken = jwt.verify(accessToken, process.env.SECRET_KEY)
+        let secret = process.env.SECRET_KEY || 'default_secret_key'
+        let decodedToken = jwt.verify(accessToken, secret)
         req.user = decodedToken
         next()
     } catch (err) {
